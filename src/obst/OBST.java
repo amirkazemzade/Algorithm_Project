@@ -35,7 +35,7 @@ public class OBST {
         for (int l = 1; l <= n; l++) {
             for (int i = 1; i <= n - l + 1; i++) {
                 int j = i + l - 1;
-                weight[i][j] = weight[i][j - 1] + words.get(j).provability + q;
+                weight[i][j] = weight[i][j - 1] + words.get(j - 1).provability + q;
                 for (int r = i; r <= j; r++) {
                     if (i == r) {
                         elements[i][j] = elements[i][r - 1] + elements[r + 1][j] + weight[i][j];
@@ -51,6 +51,33 @@ public class OBST {
             }
         }
     }
+
+    public void printTree() {
+        printTree(0, 1, n);
+    }
+
+    public void printTree(int l, int a, int b) {
+        if (l == 0) {
+            System.out.println(root[1][n] + " is the root");
+            if (a != b) {
+                printTree(root[a][b], a, root[1][n] - 1);
+                printTree(root[a][b], root[1][n] + 1, b);
+            }
+        } else if (l > b) {
+            System.out.println(root[a][b] + " is left child of " + l);
+            if (a != b) {
+                printTree(root[a][b], a, root[a][b] - 1);
+                printTree(root[a][b], root[a][b] + 1, b);
+            }
+        } else {
+            System.out.println(root[a][b] + " is right child of " + l);
+            if (a != b) {
+                printTree(root[a][b], a, root[a][b] - 1);
+                printTree(root[a][b], root[a][b] + 1, b);
+            }
+        }
+    }
+
 }
 
 
