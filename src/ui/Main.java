@@ -8,7 +8,9 @@ import javafx.stage.Stage;
 import obst.Database;
 import obst.OBST;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 
 
 public class Main extends Application {
@@ -35,20 +37,25 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        Thread tree = new Thread(() -> {
-            obst = new OBST(database.getWords());
-            System.out.println("OBST created!" + System.currentTimeMillis());
-            obst.makeTree();
-            System.out.println("Tree has been made!" + System.currentTimeMillis());
-            try {
-                obst.saveTree();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        File data = new File("src\\data\\data1-500.txt");
+        if (!data.isFile()) {
+            Thread tree = new Thread(() -> {
+                Long time = System.currentTimeMillis();
+                obst = new OBST(database.getWords());
+                System.out.println("OBST created! " + (System.currentTimeMillis()- time));
+                obst.makeTree();
+                System.out.println("Tree has been made! " + (System.currentTimeMillis() - time));
+                try {
+                    obst.saveTree();
+                    System.out.println("Tree has been saved!" + ( System.currentTimeMillis() - time));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 //            obst.printTree();
 //            System.out.println("Tree has printed!" + System.currentTimeMillis());
-        });
-        tree.start();
+            });
+            tree.start();
+        }
 
         mainPageController.translateButton.setOnAction(actionEvent -> {
             obst.printTree();
