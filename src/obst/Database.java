@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Database {
 
-    ArrayList<Word> words;
+    private ArrayList<Word> words;
 
     public Database() {
         words = new ArrayList<>();

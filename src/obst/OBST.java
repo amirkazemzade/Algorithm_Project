@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OBST {
-    ArrayList<Word> words;
-    int n, m;
-    double q;
+    private ArrayList<Word> words;
+    private int n, m;
+    private double q;
 
-    Map<Integer, Map<Integer, Double>> elements;
-    Map<Integer, Map<Integer, Double>> weight;
-    Map<Integer, Map<Integer, Integer>> root;
+    private Map<Integer, Map<Integer, Double>> elements;
+    private Map<Integer, Map<Integer, Double>> weight;
+    private Map<Integer, Map<Integer, Integer>> root;
 
     public OBST(ArrayList<Word> words) {
         this.words = words;
@@ -19,9 +19,13 @@ public class OBST {
         m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
-            sumOfP += words.get(i).provability;
+            sumOfP += words.get(i).getProvability();
         }
         q = (1 - sumOfP) / m;
+    }
+
+    public Map<Integer, Map<Integer, Integer>> getRoot() {
+        return root;
     }
 
     public void makeTree() {
@@ -43,7 +47,7 @@ public class OBST {
         for (int l = 1; l <= n; l++) {
             for (int i = 1; i <= n - l + 1; i++) {
                 int j = i + l - 1;
-                weight.get(i).put(j, weight.get(i).get(j - 1) + words.get(j - 1).provability + q);
+                weight.get(i).put(j, weight.get(i).get(j - 1) + words.get(j - 1).getProvability() + q);
                 for (int r = i; r <= j; r++) {
                     if (i == r) {
                         elements.get(i).put(j, elements.get(i).get(r - 1) + elements.get(r + 1).get(j) + weight.get(i).get(j));
