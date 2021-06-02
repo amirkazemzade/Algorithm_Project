@@ -1,8 +1,10 @@
 package obst;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class OBST {
     private ArrayList<Word> words;
@@ -15,7 +17,8 @@ public class OBST {
 
     public OBST(ArrayList<Word> words) {
         this.words = words;
-        n = words.size();
+//        n = words.size(); TODO: make it preform good for size of words
+        n = 1000;
         m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
@@ -61,8 +64,50 @@ public class OBST {
                     }
                 }
             }
-            System.out.println("round " + l + "finished!");
+//            System.out.println("round " + l + " finished!");
         }
+    }
+
+    public void saveTree() throws IOException {
+        Queue<Integer> nodesQueue = new LinkedList<>();
+        Queue<Integer> aQueue = new LinkedList<>();
+        Queue<Integer> bQueue = new LinkedList<>();
+        int lines = 0;
+        File dataFile = new File("src\\data\\data" + (lines + 1) + "-" + (lines + 500) + ".txt");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
+
+        int a = 1, b = n;
+        int node = root.get(a).get(b);
+        nodesQueue.add(node);
+        aQueue.add(a);
+        bQueue.add(b);
+        while (!nodesQueue.isEmpty()) {
+            if (lines % 500 == 0 && lines != 0) {
+                writer.close();
+                dataFile = new File("src\\data\\data" + (lines + 1) + "-" + (lines + 500) + ".txt");
+                writer = new BufferedWriter(new FileWriter(dataFile));
+            }
+            node = nodesQueue.poll();
+            a = aQueue.poll();
+            b = bQueue.poll();
+            Word word = words.get(node);
+            writer.write(node + " " + word.getWord() + " " + word.getTranslation());
+            writer.newLine();
+            lines++;
+            if (a != b) {
+                if (a <= node - 1) {
+                    nodesQueue.add(root.get(a).get(node - 1));
+                    aQueue.add(a);
+                    bQueue.add(node - 1);
+                }
+                if (node + 1 <= b) {
+                    nodesQueue.add(root.get(node + 1).get(b));
+                    aQueue.add(node + 1);
+                    bQueue.add(b);
+                }
+            }
+        }
+        writer.close();
     }
 
     public void printTree() {
@@ -72,22 +117,16 @@ public class OBST {
     public void printTree(int l, int a, int b) {
         if (l == 0) {
             System.out.println(root.get(1).get(n) + " is the root");
-            if (a != b) {
-                printTree(root.get(a).get(b), a, root.get(1).get(n) - 1);
-                printTree(root.get(a).get(b), root.get(1).get(n) + 1, b);
-            }
         } else if (l > b) {
             System.out.println(root.get(a).get(b) + " is left child of " + l);
-            if (a != b) {
-                printTree(root.get(a).get(b), a, root.get(a).get(b) - 1);
-                printTree(root.get(a).get(b), root.get(a).get(b) + 1, b);
-            }
         } else {
             System.out.println(root.get(a).get(b) + " is right child of " + l);
-            if (a != b) {
+        }
+        if (a != b) {
+            if (a <= root.get(a).get(b) - 1)
                 printTree(root.get(a).get(b), a, root.get(a).get(b) - 1);
+            if (root.get(a).get(b) + 1 <= b)
                 printTree(root.get(a).get(b), root.get(a).get(b) + 1, b);
-            }
         }
     }
 

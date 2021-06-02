@@ -8,9 +8,13 @@ import javafx.stage.Stage;
 import obst.Database;
 import obst.OBST;
 
+import java.io.IOException;
+
 
 public class Main extends Application {
 
+    OBST obst;
+    Database database;
     FXMLLoader mainPageLoader;
 
     @Override
@@ -23,7 +27,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
 
-        Database database = new Database();
+        database = new Database();
 
         try {
             database.updateDatabase();
@@ -32,16 +36,23 @@ public class Main extends Application {
         }
 
         Thread tree = new Thread(() -> {
-            OBST obst = new OBST(database.getWords());
+            obst = new OBST(database.getWords());
             System.out.println("OBST created!" + System.currentTimeMillis());
             obst.makeTree();
             System.out.println("Tree has been made!" + System.currentTimeMillis());
-            obst.printTree();
-            System.out.println("Tree has printed!" + System.currentTimeMillis());
+            try {
+                obst.saveTree();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            obst.printTree();
+//            System.out.println("Tree has printed!" + System.currentTimeMillis());
         });
         tree.start();
 
-
+        mainPageController.translateButton.setOnAction(actionEvent -> {
+            obst.printTree();
+        });
     }
 
 
