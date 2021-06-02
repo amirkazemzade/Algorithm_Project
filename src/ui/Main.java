@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import obst.Database;
+import obst.OBST;
 
 public class Main extends Application {
 
@@ -19,6 +21,15 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
+        Database database = new Database();
+        try {
+            database.updateDatabase();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        OBST obst = new OBST(database.getWords());
+        obst.makeTree();
+        obst.printTree();
     }
 
 
