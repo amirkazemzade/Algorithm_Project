@@ -64,7 +64,7 @@ public class OBST {
                     }
                 }
             }
-//            System.out.println("round " + l + " finished!");
+            System.out.println("round " + l + " finished!");
         }
     }
 
@@ -81,6 +81,8 @@ public class OBST {
         nodesQueue.add(node);
         aQueue.add(a);
         bQueue.add(b);
+        int nodeCount = 1;
+        int qCount = 0;
         while (!nodesQueue.isEmpty()) {
             if (lines % 500 == 0 && lines != 0) {
                 writer.close();
@@ -90,6 +92,13 @@ public class OBST {
             node = nodesQueue.poll();
             a = aQueue.poll();
             b = bQueue.poll();
+            if (node == -1){
+                writer.write("q");
+                writer.newLine();
+                lines++;
+                qCount++;
+                continue;
+            }
             Word word = words.get(node);
             writer.write(node + " " + word.getWord() + " " + word.getTranslation());
             writer.newLine();
@@ -99,14 +108,33 @@ public class OBST {
                     nodesQueue.add(root.get(a).get(node - 1));
                     aQueue.add(a);
                     bQueue.add(node - 1);
+                    nodeCount++;
+                } else {
+                    nodesQueue.add(-1);
+                    aQueue.add(0);
+                    bQueue.add(0);
                 }
                 if (node + 1 <= b) {
                     nodesQueue.add(root.get(node + 1).get(b));
                     aQueue.add(node + 1);
                     bQueue.add(b);
+                    nodeCount++;
+                } else {
+                    nodesQueue.add(-1);
+                    aQueue.add(0);
+                    bQueue.add(0);
                 }
+            } else {
+                nodesQueue.add(-1);
+                aQueue.add(0);
+                bQueue.add(0);
+                nodesQueue.add(-1);
+                aQueue.add(0);
+                bQueue.add(0);
             }
         }
+        System.out.println(nodeCount + " nodes has been saved!");
+        System.out.println(qCount + " q has been saved!");
         writer.close();
     }
 
