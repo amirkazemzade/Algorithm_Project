@@ -73,8 +73,10 @@ public class OBST {
         Queue<Integer> aQueue = new LinkedList<>();
         Queue<Integer> bQueue = new LinkedList<>();
         int lines = 0;
-        File dataFile = new File("src\\data\\data" + (lines + 1) + "-" + (lines + 500) + ".txt");
+        int nextDataIndex = 0;
+        File dataFile = new File("src\\data\\data" + nextDataIndex +  ".txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
+        nextDataIndex++;
 
         int a = 1, b = n;
         int node = root.get(a).get(b);
@@ -86,14 +88,15 @@ public class OBST {
         while (!nodesQueue.isEmpty()) {
             if (lines % 500 == 0 && lines != 0) {
                 writer.close();
-                dataFile = new File("src\\data\\data" + (lines + 1) + "-" + (lines + 500) + ".txt");
+                dataFile = new File("src\\data\\data" + nextDataIndex + ".txt");
                 writer = new BufferedWriter(new FileWriter(dataFile));
+                nextDataIndex++;
             }
             node = nodesQueue.poll();
             a = aQueue.poll();
             b = bQueue.poll();
             if (node == -1){
-                writer.write("q");
+                writer.write("-1 q q");
                 writer.newLine();
                 lines++;
                 qCount++;

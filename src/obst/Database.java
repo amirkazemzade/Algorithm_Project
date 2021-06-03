@@ -22,10 +22,12 @@ public class Database {
 
         if (sortedDictionary.exists()) {
             readWords(sortedDictionary);
+            System.out.println("has read sortedDictionary file!");
         } else if (dictionary.exists()) {
             readWords(dictionary);
             words.sort(new WordComparator());
             saveSortedArray(sortedDictionary);
+            System.out.println("has read dictionary file and created sortedDictionary file!");
         }
     }
 
