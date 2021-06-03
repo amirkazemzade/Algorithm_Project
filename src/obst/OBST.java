@@ -93,6 +93,9 @@ public class OBST {
                 nextDataIndex++;
             }
             node = nodesQueue.poll();
+            if (node == 1000){
+                System.out.println("found it");
+            }
             a = aQueue.poll();
             b = bQueue.poll();
             if (node == -1){

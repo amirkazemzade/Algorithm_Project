@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Translator {
+public class WordTranslator {
     ArrayList<TreeNode> startTree;
     ArrayList<TreeNode> tree;
     int nextDataIndex = 1;
@@ -13,7 +13,7 @@ public class Translator {
     File currentData;
 
 
-    public Translator() throws FileNotFoundException {
+    public WordTranslator() throws FileNotFoundException {
         readStartTree();
         tree = startTree;
         currentData = startData;
@@ -21,10 +21,18 @@ public class Translator {
 
     public String translate(String word) throws FileNotFoundException {
         int index = 1;
+        int realIndex = 1;
+        nextDataIndex = 1;
+        tree = startTree;
+        currentData = startData;
         while (true) {
             if (index >= tree.size()) {
                 index -= tree.size();
-                tree = readTree();
+                try {
+                    tree = readTree();
+                } catch (Exception e){
+                    return "?";
+                }
                 continue;
             }
             TreeNode node = tree.get(index);
@@ -37,9 +45,11 @@ public class Translator {
                 if (compare == 0) {
                     return node.getTranslation();
                 } else if (compare < 0) {
-                    index = 2 * index;
+                    index += realIndex;
+                    realIndex = 2 * realIndex;
                 } else {
-                    index = (2 * index) + 1;
+                    index += realIndex + 1;
+                    realIndex = (2 * realIndex) + 1;
                 }
             }
         }

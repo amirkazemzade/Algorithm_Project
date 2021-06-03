@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import obst.Database;
 import obst.OBST;
+import translator.TextTranslator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Time;
 
@@ -37,12 +39,21 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        File data = new File("src\\data\\data1-500.txt");
+        File data = new File("src\\data\\data0.txt");
         if (!data.isFile()) {
             updateDatabase();
         }
 
-        mainPageController.translateButton.setOnAction(actionEvent -> obst.printTree());
+        mainPageController.translateButton.setOnAction(actionEvent -> {
+            String input = mainPageController.inputText.getText().toLowerCase();
+            String output = "";
+            try {
+                output = TextTranslator.translate(input);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            mainPageController.outputText.setText(output);
+        });
 
         mainPageController.updateDatabaseButton.setOnAction(actionEvent -> updateDatabase());
     }
