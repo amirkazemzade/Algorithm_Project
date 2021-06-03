@@ -39,31 +39,36 @@ public class Main extends Application {
 
         File data = new File("src\\data\\data1-500.txt");
         if (!data.isFile()) {
-            Thread tree = new Thread(() -> {
-                Long time = System.currentTimeMillis();
-                obst = new OBST(database.getWords());
-                System.out.println("OBST created! " + (System.currentTimeMillis()- time));
-                obst.makeTree();
-                System.out.println("Tree has been made! " + (System.currentTimeMillis() - time));
-                try {
-                    obst.saveTree();
-                    System.out.println("Tree has been saved!" + ( System.currentTimeMillis() - time));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//            obst.printTree();
-//            System.out.println("Tree has printed!" + System.currentTimeMillis());
-            });
-            tree.start();
+            updateDatabase();
         }
 
-        mainPageController.translateButton.setOnAction(actionEvent -> {
-            obst.printTree();
-        });
+        mainPageController.translateButton.setOnAction(actionEvent -> obst.printTree());
+
+        mainPageController.updateDatabaseButton.setOnAction(actionEvent -> updateDatabase());
     }
 
 
     public static void main(String[] args) {
         launch(args);
     }
+
+    private void updateDatabase(){
+        Thread tree = new Thread(() -> {
+            long time = System.currentTimeMillis();
+            obst = new OBST(database.getWords());
+            System.out.println("OBST created! " + (System.currentTimeMillis()- time));
+            obst.makeTree();
+            System.out.println("Tree has been made! " + (System.currentTimeMillis() - time));
+            try {
+                obst.saveTree();
+                System.out.println("Tree has been saved! " + ( System.currentTimeMillis() - time));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            obst.printTree();
+//            System.out.println("Tree has printed!" + System.currentTimeMillis());
+        });
+        tree.start();
+    }
 }
+

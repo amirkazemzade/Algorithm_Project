@@ -6,15 +6,15 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainPageController">
-   <children>
-      <Label text="Enter your text:" />
-      <TextArea fx:id="inputText" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-      <Button fx:id="translateButton" mnemonicParsing="false" text="Translate" />
-      <TextArea fx:id="outputText" editable="false" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-   </children>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="600.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainPageController">
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
    </padding>
+   <Label text="Enter your text:"/>
+   <TextArea fx:id="inputText" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+   <Button fx:id="translateButton" mnemonicParsing="false" text="Translate"/>
+   <TextArea fx:id="outputText" editable="false" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+   <Button fx:id="updateDatabaseButton" mnemonicParsing="false" text="Update Database"/>
 </VBox>
