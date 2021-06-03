@@ -1,14 +1,18 @@
-package obst;
+package translator;
 
-public class Word {
+public class TreeNode {
+    private int key;
     private String word;
     private String translation;
-    private double provability;
 
-    public Word(String word, String translation, double provability) {
+    public TreeNode(int key, String word, String translation) {
+        this.key = key;
         this.word = word;
         this.translation = translation;
-        this.provability = provability;
+    }
+
+    public int getKey() {
+        return key;
     }
 
     public String getWord() {
@@ -18,9 +22,4 @@ public class Word {
     public String getTranslation() {
         return translation;
     }
-
-    public double getProvability() {
-        return provability;
-    }
 }
-
