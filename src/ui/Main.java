@@ -12,8 +12,6 @@ import translator.TextTranslator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Time;
-
 
 public class Main extends Application {
 
@@ -33,11 +31,7 @@ public class Main extends Application {
 
         database = new Database();
 
-        try {
-            database.updateDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
         File data = new File("src\\data\\data0.txt");
         if (!data.isFile()) {
@@ -64,6 +58,11 @@ public class Main extends Application {
     }
 
     private void updateDatabase(){
+        try {
+            database.updateDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Thread tree = new Thread(() -> {
             long time = System.currentTimeMillis();
             obst = new OBST(database.getWords());

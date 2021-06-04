@@ -32,7 +32,7 @@ public class Database {
     }
 
     private void readWords(File file) throws FileNotFoundException {
-        Scanner in = new Scanner(file);
+        Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
         while (in.hasNext()) {
             String line = in.nextLine();
             String[] lineWord = line.split(" ");
