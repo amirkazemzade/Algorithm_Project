@@ -17,8 +17,8 @@ public class OBST {
 
     public OBST(ArrayList<Word> words) {
         this.words = words;
-//        n = words.size(); TODO: make it preform good for size of words
-        n = 1000;
+//        n = words.size(); TODO: make it preform good for big size of words
+        n = 2500;
         m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
@@ -64,7 +64,7 @@ public class OBST {
                     }
                 }
             }
-            System.out.println("round " + l + " finished!");
+//            System.out.println("round " + l + " finished!");
         }
     }
 
@@ -148,7 +148,7 @@ public class OBST {
         printTree(0, 1, n);
     }
 
-    public void printTree(int l, int a, int b) {
+    public void printTree(int l, int a, int b)  {
         if (l == 0) {
             System.out.println(root.get(1).get(n) + " is the root");
         } else if (l > b) {
@@ -163,7 +163,6 @@ public class OBST {
                 printTree(root.get(a).get(b), root.get(a).get(b) + 1, b);
         }
     }
-
 }
 
 

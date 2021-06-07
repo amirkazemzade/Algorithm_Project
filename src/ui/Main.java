@@ -25,12 +25,11 @@ public class Main extends Application {
         Parent root = mainPageLoader.load();
         MainPageController mainPageController = mainPageLoader.getController();
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Dictionary");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
 
         database = new Database();
-
 
 
         File data = new File("src\\data\\data0.txt");
@@ -39,6 +38,7 @@ public class Main extends Application {
         }
 
         mainPageController.translateButton.setOnAction(actionEvent -> {
+            long translationStartTime = System.currentTimeMillis();
             String input = mainPageController.inputText.getText().toLowerCase();
             String output = "";
             try {
@@ -47,6 +47,7 @@ public class Main extends Application {
                 e.printStackTrace();
             }
             mainPageController.outputText.setText(output);
+            System.out.println("Text has been translated in " + (System.currentTimeMillis() - translationStartTime) + " milliseconds!");
         });
 
         mainPageController.updateDatabaseButton.setOnAction(actionEvent -> updateDatabase());
@@ -57,26 +58,25 @@ public class Main extends Application {
         launch(args);
     }
 
-    private void updateDatabase(){
+    private void updateDatabase() {
+        long databaseStartTime = System.currentTimeMillis();
         try {
             database.updateDatabase();
+            System.out.println("Database has updated in " + (System.currentTimeMillis() - databaseStartTime) + " milliseconds!");
         } catch (Exception e) {
             e.printStackTrace();
         }
         Thread tree = new Thread(() -> {
-            long time = System.currentTimeMillis();
+            long treeStartTime = System.currentTimeMillis();
             obst = new OBST(database.getWords());
-            System.out.println("OBST created! " + (System.currentTimeMillis()- time));
             obst.makeTree();
-            System.out.println("Tree has been made! " + (System.currentTimeMillis() - time));
+            System.out.println("OBST has been made in " + (System.currentTimeMillis() - treeStartTime) + " milliseconds!");
             try {
                 obst.saveTree();
-                System.out.println("Tree has been saved! " + ( System.currentTimeMillis() - time));
+                System.out.println("OBST has been saved! ");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            obst.printTree();
-//            System.out.println("Tree has printed!" + System.currentTimeMillis());
         });
         tree.start();
     }
