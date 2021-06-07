@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class OBST {
-    private ArrayList<Word> words;
-    private int n, m;
-    private double q;
+    private final ArrayList<Word> words;
+    private final int n;
+    private final double q;
 
     private Map<Integer, Map<Integer, Double>> elements;
     private Map<Integer, Map<Integer, Double>> weight;
@@ -19,16 +19,12 @@ public class OBST {
         this.words = words;
 //        n = words.size(); TODO: make it preform good for big size of words
         n = 2500;
-        m = n + 1;
+        int m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
             sumOfP += words.get(i).getProvability();
         }
         q = (1 - sumOfP) / m;
-    }
-
-    public Map<Integer, Map<Integer, Integer>> getRoot() {
-        return root;
     }
 
     public void makeTree() {
@@ -68,13 +64,13 @@ public class OBST {
         }
     }
 
-    public void saveTree() throws IOException {
+    public void saveTree(String dataFolderName, String dataFileName) throws IOException {
         Queue<Integer> nodesQueue = new LinkedList<>();
         Queue<Integer> aQueue = new LinkedList<>();
         Queue<Integer> bQueue = new LinkedList<>();
         int lines = 0;
         int nextDataIndex = 0;
-        File dataFile = new File("src\\data\\data" + nextDataIndex +  ".txt");
+        File dataFile = new File("src\\" + dataFolderName + "\\" + dataFileName + nextDataIndex + ".txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
         nextDataIndex++;
 
@@ -93,12 +89,12 @@ public class OBST {
                 nextDataIndex++;
             }
             node = nodesQueue.poll();
-            if (node == 1000){
+            if (node == 1000) {
                 System.out.println("found it");
             }
             a = aQueue.poll();
             b = bQueue.poll();
-            if (node == -1){
+            if (node == -1) {
                 writer.write("-1 q q");
                 writer.newLine();
                 lines++;
@@ -148,7 +144,7 @@ public class OBST {
         printTree(0, 1, n);
     }
 
-    public void printTree(int l, int a, int b)  {
+    public void printTree(int l, int a, int b) {
         if (l == 0) {
             System.out.println(root.get(1).get(n) + " is the root");
         } else if (l > b) {

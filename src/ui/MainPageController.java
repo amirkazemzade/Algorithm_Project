@@ -10,6 +10,8 @@ public class MainPageController {
 
     public Button updateDatabaseButton;
 
+    public Button treeMode;
+
     public TextArea inputText;
 
     public TextArea outputText;
