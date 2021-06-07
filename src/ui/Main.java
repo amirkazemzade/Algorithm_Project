@@ -42,6 +42,16 @@ public class Main extends Application {
             }
         }
 
+        mainPageController.treeMode.setOnAction(actionEvent -> {
+            if (mainPageController.treeMode.getText().equals("Normal Tree")){
+                makeExactOBST = false;
+                mainPageController.treeMode.setText("First Case Tree");
+            } else {
+                makeExactOBST = true;
+                mainPageController.treeMode.setText("Normal Tree");
+            }
+        });
+
         mainPageController.translateButton.setOnAction(actionEvent -> {
             long translationStartTime = System.currentTimeMillis();
             String input = mainPageController.inputText.getText().toLowerCase();
@@ -55,9 +65,14 @@ public class Main extends Application {
             System.out.println("Text has been translated in " + (System.currentTimeMillis() - translationStartTime) + " milliseconds!");
         });
 
-        mainPageController.updateDatabaseButton.setOnAction(actionEvent -> updateDatabase());
+        mainPageController.updateDatabaseButton.setOnAction(actionEvent -> {
+            if (makeExactOBST) {
+                updateDatabase();
+            } else {
+                updateDatabaseByLetter();
+            }
+        });
     }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -88,15 +103,29 @@ public class Main extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            ArrayList<Thread> threads = new ArrayList<>();
             for (ArrayList<Word> wordsByLetter: words) {
-                try {
-                    OBST obst = new OBST(Database.getWords());
-                    obst.makeTree();
-                    obst.saveTree("dataByLetter", "data_" + wordsByLetter.get(0).getWord().charAt(0));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                Thread treeByLetter = new Thread(() -> {
+                    try {
+                        OBST obst = new OBST(wordsByLetter);
+                        obst.makeTree();
+                        obst.saveTree("dataByLetter", "data_" + wordsByLetter.get(0).getWord().charAt(0));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+//                });
+//                threads.add(treeByLetter);
+//                treeByLetter.start();
             }
+
+//            for (Thread thread: threads) {
+//                try {
+//                    thread.join();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
             System.out.println("OBST has been made and saved in " + (System.currentTimeMillis() - treeStartTime) + " milliseconds!");
 
         });

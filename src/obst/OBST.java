@@ -17,8 +17,9 @@ public class OBST {
 
     public OBST(ArrayList<Word> words) {
         this.words = words;
-//        n = words.size(); TODO: make it preform good for big size of words
-        n = 2500;
+        n = words.size();
+//        TODO: make it preform good for big size of words
+//        n = Math.min(words.size(), 1000);
         int m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
@@ -62,6 +63,7 @@ public class OBST {
             }
 //            System.out.println("round " + l + " finished!");
         }
+        System.out.println("Tree has been made letter: " + words.get(0).getWord().charAt(0));
     }
 
     public void saveTree(String dataFolderName, String dataFileName) throws IOException {
@@ -70,9 +72,14 @@ public class OBST {
         Queue<Integer> bQueue = new LinkedList<>();
         int lines = 0;
         int nextDataIndex = 0;
+
+        File dataFolder = new File("src\\" + dataFolderName);
+        if (!dataFolder.exists()) dataFolder.mkdir();
+
         File dataFile = new File("src\\" + dataFolderName + "\\" + dataFileName + nextDataIndex + ".txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
         nextDataIndex++;
+
 
         int a = 1, b = n;
         int node = root.get(a).get(b);
@@ -84,14 +91,11 @@ public class OBST {
         while (!nodesQueue.isEmpty()) {
             if (lines % 500 == 0 && lines != 0) {
                 writer.close();
-                dataFile = new File("src\\data\\data" + nextDataIndex + ".txt");
+                dataFile = new File("src\\" + dataFolderName + "\\" + dataFileName + nextDataIndex + ".txt");
                 writer = new BufferedWriter(new FileWriter(dataFile));
                 nextDataIndex++;
             }
             node = nodesQueue.poll();
-            if (node == 1000) {
-                System.out.println("found it");
-            }
             a = aQueue.poll();
             b = bQueue.poll();
             if (node == -1) {
@@ -101,7 +105,7 @@ public class OBST {
                 qCount++;
                 continue;
             }
-            Word word = words.get(node);
+            Word word = words.get(node - 1);
             writer.write(node + " " + word.getWord() + " " + word.getTranslation());
             writer.newLine();
             lines++;

@@ -28,10 +28,11 @@ public class Database {
         File dictionary = new File("src\\dictionary.txt");
         ArrayList<ArrayList<Word>> words = new ArrayList<>();
 
-        if (sortedDictionary.exists()) {
-            words = readWordsByFirstLetter(sortedDictionary);
-            System.out.println("has read sortedDictionary file!");
-        } else if (dictionary.exists()) {
+//        if (sortedDictionary.exists()) {
+//            words = readWordsByFirstLetter(sortedDictionary);
+//            System.out.println("has read sortedDictionary file!");
+//        } else
+            if (dictionary.exists()) {
             ArrayList<Word> unsortedWords = readWords(dictionary);
             unsortedWords.sort(new WordComparator());
             saveSortedArray(sortedDictionary, unsortedWords);
@@ -47,8 +48,9 @@ public class Database {
         ArrayList<Word> words = new ArrayList<>();
         while (in.hasNext()) {
             String line = in.nextLine();
-            String[] lineWord = line.split(" ");
-            words.add(new Word(lineWord[0], lineWord[1], Double.parseDouble(lineWord[2])));
+            line = line.replace("\uFEFF", "");
+            String[] lineWord = line.split("\\s+");
+            words.add(new Word(lineWord[0].toLowerCase(), lineWord[1], Double.parseDouble(lineWord[2])));
         }
         return words;
     }
@@ -60,7 +62,7 @@ public class Database {
         char firstChar = 'a';
         while (in.hasNext()) {
             String line = in.nextLine();
-            String[] lineWord = line.split(" ");
+            String[] lineWord = line.split("\\s+");
             if (lineWord[0].toLowerCase().charAt(0) == firstChar && lineWord[0].toLowerCase().charAt(0) <= 'z') {
                 currentWords.add(new Word(lineWord[0], lineWord[1], Double.parseDouble(lineWord[2])));
             } else {
@@ -78,5 +80,6 @@ public class Database {
             writer.write(word.getWord() + " " + word.getTranslation() + " " + word.getProvability());
             writer.newLine();
         }
+        writer.close();
     }
 }
