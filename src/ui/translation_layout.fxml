@@ -8,66 +8,68 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ui.TranslationLayoutController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TranslationLayoutController">
     <children>
         <Label text="Enter your text : ">
             <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TextArea fx:id="input_text" prefHeight="192.0" prefWidth="839.0" promptText="Enter your text"
-                  VBox.vgrow="ALWAYS">
+        <TextArea fx:id="input_text" prefHeight="192.0" prefWidth="839.0" promptText="Enter your text" VBox.vgrow="ALWAYS">
             <VBox.margin>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </VBox.margin>
         </TextArea>
-        <Button fx:id="translate_button" mnemonicParsing="false" text="Translate" textAlignment="CENTER"
-                onAction="#onTranslateClicked">
+        <Button fx:id="translate_button" mnemonicParsing="false" onAction="#onTranslateClicked" text="Translate" textAlignment="CENTER">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
             <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
         </Button>
         <TextArea fx:id="output_text" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <VBox.margin>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </VBox.margin>
         </TextArea>
         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="860.0" VBox.vgrow="ALWAYS">
             <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <children>
-                <Button fx:id="update_database_button" mnemonicParsing="false" text="Update Database"
-                        textAlignment="CENTER" onAction="#onUpdateDatabaseClicked">
+            <Button fx:id="back_to_menu" mnemonicParsing="false" text="back to menu" textAlignment="CENTER"
+            onAction="#onBackToMenuClicked">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+                <Button fx:id="update_database_button" mnemonicParsing="false" onAction="#onUpdateDatabaseClicked" text="Update Database" textAlignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="tree_mode_button" mnemonicParsing="false" text="Normal Tree" textAlignment="CENTER"
-                        onAction="#onTreeModeClicked">
+                <Button fx:id="tree_mode_button" mnemonicParsing="false" onAction="#onTreeModeClicked" text="Normal Tree" textAlignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
     </padding>
 </VBox>
