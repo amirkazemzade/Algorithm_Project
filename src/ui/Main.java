@@ -20,8 +20,11 @@ public class Main extends Application {
     FXMLLoader mainPageLoader;
     Boolean makeExactOBST = true;
 
+    Stage window;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
         mainPageLoader = new FXMLLoader(getClass().getResource("main_page.fxml"));
         Parent root = mainPageLoader.load();
         MainPageController mainPageController = mainPageLoader.getController();
