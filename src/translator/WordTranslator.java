@@ -11,9 +11,18 @@ public class WordTranslator {
     int nextDataIndex = 1;
     File startData;
     File currentData;
+    String dataPath;
 
 
     public WordTranslator() throws FileNotFoundException {
+        dataPath = "src\\data\\data";
+        readStartTree();
+        tree = startTree;
+        currentData = startData;
+    }
+
+    public WordTranslator(char firstCase) throws FileNotFoundException {
+        dataPath = "src\\dataByLetter\\data_" + firstCase;
         readStartTree();
         tree = startTree;
         currentData = startData;
@@ -30,7 +39,7 @@ public class WordTranslator {
                 index -= tree.size();
                 try {
                     tree = readTree();
-                } catch (Exception e){
+                } catch (Exception e) {
                     return "?";
                 }
                 continue;
@@ -56,7 +65,7 @@ public class WordTranslator {
     }
 
     private ArrayList<TreeNode> readTree() throws FileNotFoundException {
-        currentData = new File("src\\data\\data" + nextDataIndex + ".txt");
+        currentData = new File(dataPath + nextDataIndex + ".txt");
         nextDataIndex++;
 
         Scanner in = new Scanner(currentData);
@@ -74,7 +83,7 @@ public class WordTranslator {
     private void readStartTree() throws FileNotFoundException {
         startTree = new ArrayList<>();
         startTree.add(new TreeNode(-2, "start", "start"));
-        startData = new File("src\\data\\data0.txt");
+        startData = new File(dataPath + "0.txt");
         Scanner in = new Scanner(startData);
 
         while (in.hasNext()) {

@@ -18,8 +18,6 @@ public class OBST {
     public OBST(ArrayList<Word> words) {
         this.words = words;
         n = words.size();
-//        TODO: make it preform good for big size of words
-//        n = Math.min(words.size(), 1000);
         int m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {

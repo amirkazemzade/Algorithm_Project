@@ -43,7 +43,7 @@ public class Main extends Application {
         }
 
         mainPageController.treeMode.setOnAction(actionEvent -> {
-            if (mainPageController.treeMode.getText().equals("Normal Tree")){
+            if (mainPageController.treeMode.getText().equals("Normal Tree")) {
                 makeExactOBST = false;
                 mainPageController.treeMode.setText("First Case Tree");
             } else {
@@ -57,7 +57,11 @@ public class Main extends Application {
             String input = mainPageController.inputText.getText().toLowerCase();
             String output = "";
             try {
-                output = TextTranslator.translate(input);
+                if (makeExactOBST) {
+                    output = TextTranslator.translate(input);
+                } else {
+                    output = TextTranslator.translateByLetter(input);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -103,29 +107,15 @@ public class Main extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ArrayList<Thread> threads = new ArrayList<>();
-            for (ArrayList<Word> wordsByLetter: words) {
-//                Thread treeByLetter = new Thread(() -> {
-                    try {
-                        OBST obst = new OBST(wordsByLetter);
-                        obst.makeTree();
-                        obst.saveTree("dataByLetter", "data_" + wordsByLetter.get(0).getWord().charAt(0));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-//                });
-//                threads.add(treeByLetter);
-//                treeByLetter.start();
+            for (ArrayList<Word> wordsByLetter : words) {
+                try {
+                    OBST obst = new OBST(wordsByLetter);
+                    obst.makeTree();
+                    obst.saveTree("dataByLetter", "data_" + wordsByLetter.get(0).getWord().charAt(0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-//            for (Thread thread: threads) {
-//                try {
-//                    thread.join();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-
             System.out.println("OBST has been made and saved in " + (System.currentTimeMillis() - treeStartTime) + " milliseconds!");
 
         });
