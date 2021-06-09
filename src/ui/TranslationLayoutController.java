@@ -7,7 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import translator.TextTranslator;
+import ui.Main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TranslationLayoutController {
@@ -21,28 +25,27 @@ public class TranslationLayoutController {
     private Button translate_button;
 
     @FXML
-    private Button update_database_button;
-
-    @FXML
-    private Button tree_mode_button;
-
-    @FXML
     private Button back_to_menu;
 
-    public void onTranslateClicked(ActionEvent event){
-
-    }
-
-    public void onUpdateDatabaseClicked(ActionEvent event){
-
-    }
-
-    public void onTreeModeClicked(ActionEvent event){
-
+    public void onTranslateClicked(ActionEvent event) {
+        long translationStartTime = System.currentTimeMillis();
+            String input = input_text.getText().toLowerCase();
+            String output = "";
+            try {
+                if (Main.settings.isByFirstLetter()) {
+                    output = TextTranslator.translateByLetter(input);
+                } else {
+                    output = TextTranslator.translate(input);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            output_text.setText(output);
+            System.out.println("Text has been translated in " + (System.currentTimeMillis() - translationStartTime) + " milliseconds!");
     }
 
     public void onBackToMenuClicked(ActionEvent event) throws IOException {
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("menu_layout.fxml"));
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("layout/menu_layout.fxml"));
         Parent menuP = menuLoader.load();
         Main.window.setScene(new Scene(menuP));
         Main.window.show();

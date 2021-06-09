@@ -59,7 +59,7 @@ public class OBST {
                     }
                 }
             }
-//            System.out.println("round " + l + " finished!");
+            System.out.println("round " + l + " finished!");
         }
         System.out.println("Tree has been made letter: " + words.get(0).getWord().charAt(0));
     }

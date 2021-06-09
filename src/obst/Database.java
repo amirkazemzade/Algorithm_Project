@@ -6,6 +6,29 @@ import java.util.Scanner;
 
 public class Database {
 
+    public static void writeSettings(Settings settings) throws IOException {
+        File settingsFolder = new File("src\\settings");
+        File settingsFile = new File("src\\settings\\settings.txt");
+
+        if (!settingsFolder.exists()) settingsFolder.mkdir();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(settingsFile));
+
+        writer.write(settings.getRamUsage() + " " + settings.isByFirstLetter());
+        writer.close();
+    }
+
+    public static Settings readSetting() throws IOException {
+        File settingsFile = new File("src\\settings\\settings.txt");
+        if (!settingsFile.exists()){
+            Settings settings = new Settings();
+            writeSettings(settings);
+            return settings;
+        } else {
+            Scanner in = new Scanner(new BufferedReader(new FileReader(settingsFile)));
+            return new Settings(in.nextInt(), in.nextBoolean());
+        }
+    }
+
     public static ArrayList<Word> getWords() throws IOException {
         File sortedDictionary = new File("src\\sortedDictionary.txt");
         File dictionary = new File("src\\dictionary.txt");
@@ -28,10 +51,10 @@ public class Database {
         File dictionary = new File("src\\dictionary.txt");
         ArrayList<ArrayList<Word>> words = new ArrayList<>();
 
-//        if (sortedDictionary.exists()) {
-//            words = readWordsByFirstLetter(sortedDictionary);
-//            System.out.println("has read sortedDictionary file!");
-//        } else
+        if (sortedDictionary.exists()) {
+            words = readWordsByFirstLetter(sortedDictionary);
+            System.out.println("has read sortedDictionary file!");
+        } else
             if (dictionary.exists()) {
             ArrayList<Word> unsortedWords = readWords(dictionary);
             unsortedWords.sort(new WordComparator());
