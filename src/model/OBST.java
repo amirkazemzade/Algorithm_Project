@@ -48,16 +48,17 @@ public class OBST {
                 weight.get(i).put(j, weight.get(i).get(j - 1) + words.get(j - 1).getProvability() + q);
                 for (int r = i; r <= j; r++) {
                     if (i == r) {
-                        elements.get(i).put(j, elements.get(i).get(r - 1) + elements.get(r + 1).get(j) + weight.get(i).get(j));
+                        elements.get(i).put(j, elements.get(i).get(r - 1) + elements.get(r + 1).get(j));
                         root.get(i).put(j, r);
                     } else {
-                        double temp = elements.get(i).get(r - 1) + elements.get(r + 1).get(j) + weight.get(i).get(j);
+                        double temp = elements.get(i).get(r - 1) + elements.get(r + 1).get(j);
                         if (temp < elements.get(i).get(j)) {
                             elements.get(i).put(j, temp);
                             root.get(i).put(j, r);
                         }
                     }
                 }
+                elements.get(i).put(j, elements.get(i).get(j) + weight.get(i).get(j));
             }
             System.out.println("round " + l + " finished!");
         }
