@@ -1,4 +1,4 @@
-package obst;
+package model;
 
 import java.util.Comparator;
 

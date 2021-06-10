@@ -1,4 +1,4 @@
-package obst;
+package model;
 
 public class Settings {
 

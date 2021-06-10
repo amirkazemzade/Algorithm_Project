@@ -1,4 +1,4 @@
-package obst;
+package model;
 
 import java.io.*;
 import java.util.ArrayList;

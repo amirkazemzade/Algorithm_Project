@@ -5,10 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import obst.Database;
-import obst.OBST;
-import obst.Settings;
-import obst.Word;
+import model.Database;
+import model.OBST;
+import model.Settings;
+import model.Word;
 
 import java.io.File;
 import java.io.IOException;
