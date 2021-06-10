@@ -18,6 +18,7 @@ public class OBST {
     public OBST(ArrayList<Word> words) {
         this.words = words;
         n = words.size();
+//        n = 10;
         int m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
@@ -79,15 +80,15 @@ public class OBST {
         BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile));
         nextDataIndex++;
 
+        int nodeCount = 0;
 
         int a = 1, b = n;
         int node = root.get(a).get(b);
         nodesQueue.add(node);
         aQueue.add(a);
         bQueue.add(b);
-        int nodeCount = 1;
-        int qCount = 0;
-        while (!nodesQueue.isEmpty()) {
+        nodeCount++;
+        while (!nodesQueue.isEmpty() && nodeCount != 0) {
             if (lines % 500 == 0 && lines != 0) {
                 writer.close();
                 dataFile = new File("src\\" + dataFolderName + "\\" + dataFileName + nextDataIndex + ".txt");
@@ -98,12 +99,18 @@ public class OBST {
             a = aQueue.poll();
             b = bQueue.poll();
             if (node == -1) {
+                nodesQueue.add(-1);
+                aQueue.add(0);
+                bQueue.add(0);
+                nodesQueue.add(-1);
+                aQueue.add(0);
+                bQueue.add(0);
                 writer.write("-1 q q");
                 writer.newLine();
                 lines++;
-                qCount++;
                 continue;
             }
+            nodeCount--;
             Word word = words.get(node - 1);
             writer.write(node + " " + word.getWord() + " " + word.getTranslation());
             writer.newLine();
@@ -138,29 +145,7 @@ public class OBST {
                 bQueue.add(0);
             }
         }
-        System.out.println(nodeCount + " nodes has been saved!");
-        System.out.println(qCount + " q has been saved!");
         writer.close();
-    }
-
-    public void printTree() {
-        printTree(0, 1, n);
-    }
-
-    public void printTree(int l, int a, int b) {
-        if (l == 0) {
-            System.out.println(root.get(1).get(n) + " is the root");
-        } else if (l > b) {
-            System.out.println(root.get(a).get(b) + " is left child of " + l);
-        } else {
-            System.out.println(root.get(a).get(b) + " is right child of " + l);
-        }
-        if (a != b) {
-            if (a <= root.get(a).get(b) - 1)
-                printTree(root.get(a).get(b), a, root.get(a).get(b) - 1);
-            if (root.get(a).get(b) + 1 <= b)
-                printTree(root.get(a).get(b), root.get(a).get(b) + 1, b);
-        }
     }
 }
 

@@ -13,6 +13,7 @@ public class WordTranslator {
     int nextDataIndex = 0;
     String dataPath;
     boolean isStartTree = true;
+    boolean hasAnyDataRemained = true;
 
 
     public WordTranslator() throws FileNotFoundException {
@@ -30,7 +31,8 @@ public class WordTranslator {
         int realIndex = 1;
         nextDataIndex = Main.settings.getRamUsage() + 1;
         tree = startTree;
-        while (true) {
+        hasAnyDataRemained = true;
+        while (hasAnyDataRemained) {
             if (index >= tree.size()) {
                 index -= tree.size();
                 try {
@@ -57,6 +59,7 @@ public class WordTranslator {
                 }
             }
         }
+        return "?";
     }
 
     private ArrayList<TreeNode> readTree() throws FileNotFoundException {
@@ -70,7 +73,10 @@ public class WordTranslator {
             File data = new File(dataPath + nextDataIndex + ".txt");
             nextDataIndex++;
 
-            if (!data.exists()) break;
+            if (!data.exists()) {
+                hasAnyDataRemained = false;
+                break;
+            }
 
             Scanner in = new Scanner(data);
 
