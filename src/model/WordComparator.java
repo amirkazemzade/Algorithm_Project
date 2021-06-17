@@ -2,6 +2,7 @@ package model;
 
 import java.util.Comparator;
 
+// Class inherited by Comparator class to compare two Word objects
 public class WordComparator implements Comparator<Word> {
 
     @Override

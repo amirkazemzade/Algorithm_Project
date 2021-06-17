@@ -4,8 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+// this class does works of reading and writing of not OBST database
 public class Database {
 
+    // ** Public Static Functions **//
+
+    // Saves settings into a file for loading it in later runs
     public static void writeSettings(Settings settings) throws IOException {
         File settingsFolder = new File("src\\settings");
         File settingsFile = new File("src\\settings\\settings.txt");
@@ -17,6 +22,7 @@ public class Database {
         writer.close();
     }
 
+    // Reads setting from the setting file and returns an instance of read setting
     public static Settings readSetting() throws IOException {
         File settingsFile = new File("src\\settings\\settings.txt");
         if (!settingsFile.exists()){
@@ -29,6 +35,9 @@ public class Database {
         }
     }
 
+    // reads sorted dictionary data from file and returns an array of Words
+    // if there isn't any sorted dictionary, reads dictionary and sorts it by alphabetic order,
+    // and saves it as a sorted dictionary file
     public static ArrayList<Word> getWords() throws IOException {
         File sortedDictionary = new File("src\\sortedDictionary.txt");
         File dictionary = new File("src\\dictionary.txt");
@@ -46,6 +55,10 @@ public class Database {
         return words;
     }
 
+    // reads words from sorted dictionary and makes an array list for each letter that contains words started with that letter,
+    // then returns an array list of those array lists
+    // if there isn't any sorted dictionary, reads dictionary and sorts it by alphabetic order,
+    // and saves it as a sorted dictionary file
     public static ArrayList<ArrayList<Word>> getWordsByLetter() throws IOException {
         File sortedDictionary = new File("src\\sortedDictionary.txt");
         File dictionary = new File("src\\dictionary.txt");
@@ -66,6 +79,9 @@ public class Database {
         return words;
     }
 
+    // ** Private Functions **//
+
+    // this function does reading file work of getWords() function
     private static ArrayList<Word> readWords(File file) throws FileNotFoundException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
         ArrayList<Word> words = new ArrayList<>();
@@ -78,6 +94,7 @@ public class Database {
         return words;
     }
 
+    // this function does reading file work of getWordsByLetter() function
     private static ArrayList<ArrayList<Word>> readWordsByFirstLetter(File file) throws FileNotFoundException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
         ArrayList<ArrayList<Word>> wordsByLetter = new ArrayList<>();
@@ -97,6 +114,7 @@ public class Database {
         return wordsByLetter;
     }
 
+    // this function saves the given list into given file
     private static void saveSortedArray(File sortedDictionary, ArrayList<Word> words) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(sortedDictionary));
         for (Word word : words) {

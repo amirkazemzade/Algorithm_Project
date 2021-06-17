@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// a class to translate a single word using saved OBST data
 public class WordTranslator {
     ArrayList<TreeNode> startTree;
     ArrayList<TreeNode> tree;
@@ -15,6 +16,7 @@ public class WordTranslator {
     boolean isStartTree = true;
     boolean hasAnyDataRemained = true;
 
+    // ** Constructors **//
 
     public WordTranslator() throws FileNotFoundException {
         dataPath = "src\\data\\data";
@@ -26,6 +28,9 @@ public class WordTranslator {
         tree = startTree = readTree();
     }
 
+    // ** Public Functions **//
+
+    // this method translates given word using only an specific size of tree nodes saved in ram
     public String translate(String word) throws FileNotFoundException {
         int index = 1;
         int realIndex = 1;
@@ -62,6 +67,7 @@ public class WordTranslator {
         return "?";
     }
 
+    // reads a specific number of tree nodes from files in disk to put them in ram
     private ArrayList<TreeNode> readTree() throws FileNotFoundException {
         ArrayList<TreeNode> readTree = new ArrayList<>();
         if (isStartTree) {

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+// this class does works of making and saving an OBST tree from a list
 public class OBST {
     private final ArrayList<Word> words;
     private final int n;
@@ -15,10 +16,10 @@ public class OBST {
     private Map<Integer, Map<Integer, Double>> weight;
     private Map<Integer, Map<Integer, Integer>> root;
 
+    // ** Constructor **//
     public OBST(ArrayList<Word> words) {
         this.words = words;
         n = words.size();
-//        n = 10;
         int m = n + 1;
         double sumOfP = 0;
         for (int i = 0; i < n; i++) {
@@ -27,6 +28,9 @@ public class OBST {
         q = (1 - sumOfP) / m;
     }
 
+    // ** Public Functions **//
+
+    // makes the OBST of initialized word's list
     public void makeTree() {
         elements = new HashMap<>();
         weight = new HashMap<>();
@@ -66,6 +70,7 @@ public class OBST {
         System.out.println("Tree has been made letter: " + words.get(0).getWord().charAt(0));
     }
 
+    // saves the made OBST into small files
     public void saveTree(String dataFolderName, String dataFileName) throws IOException {
         Queue<Integer> nodesQueue = new LinkedList<>();
         Queue<Integer> aQueue = new LinkedList<>();

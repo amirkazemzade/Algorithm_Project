@@ -1,9 +1,12 @@
 package model;
 
+// a class for keeping settings
 public class Settings {
 
     private int ramUsage;
     private boolean byFirstLetter;
+
+    // ** Constructors **//
 
     public Settings(int ramUsage, boolean byFirstLetter) {
         this.ramUsage = ramUsage;
@@ -14,6 +17,8 @@ public class Settings {
         ramUsage = 0;
         byFirstLetter = true;
     }
+
+    // ** Getters And Setters **//
 
     public int getRamUsage() {
         return ramUsage;

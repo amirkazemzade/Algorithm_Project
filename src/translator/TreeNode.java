@@ -1,15 +1,20 @@
 package translator;
 
+// a class to keep properties of a word organized in tree data
 public class TreeNode {
-    private int key;
-    private String word;
-    private String translation;
+    private final int key;
+    private final String word;
+    private final String translation;
+
+    // ** Constructor **//
 
     public TreeNode(int key, String word, String translation) {
         this.key = key;
         this.word = word;
         this.translation = translation;
     }
+
+    // ** Getters **//
 
     public int getKey() {
         return key;

@@ -53,6 +53,7 @@ public class Main extends Application {
         launch(args);
     }
 
+    // reads not OBST database and make and save tree with them using normal tree method
     static void updateDatabase() {
         System.out.println("Started updating database!");
         isUpdating = true;
@@ -72,6 +73,7 @@ public class Main extends Application {
         tree.start();
     }
 
+    // reads not OBST database and make and save tree with them using first case tree method
     static void updateDatabaseByLetter() {
         System.out.println("Started updating database!");
         isUpdating = true;
