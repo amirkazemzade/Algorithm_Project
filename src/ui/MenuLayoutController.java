@@ -1,5 +1,6 @@
 package ui;
 
+import com.brunomnsilva.smartgraph.containers.SmartGraphDemoContainer;
 import com.brunomnsilva.smartgraph.graph.Digraph;
 import com.brunomnsilva.smartgraph.graph.DigraphEdgeList;
 import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
@@ -10,10 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import translator.TreeNode;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MenuLayoutController {
     @FXML
@@ -35,29 +43,49 @@ public class MenuLayoutController {
 
 
     @FXML
-    public void onShowTreeClicked() {
+    public void onShowTreeClicked() throws FileNotFoundException {
         //create the graph
         Digraph<String, String> g = new DigraphEdgeList<>();
 
-        //-------------------------MAKE_TREE------------------------------//
+        File data = new File("src\\data\\data0.txt");
 
-        g.insertVertex("A");
-        g.insertVertex("B");
-        g.insertVertex("C");
+        String[] nodes = new String[16];
 
-        g.insertEdge("A","C","1");
-        g.insertEdge("A","B","2");
+        //-------------------------------insert_vertex----------------------------//
+        Scanner in = new Scanner(data);
+        int index = 1;
+        while (in.hasNext() && index < 16) {
+            String line = in.nextLine();
+            String[] lineNode = line.split(" ");
 
-        //----------------------------------------------------------------//
-
+            nodes[index] = lineNode[1];
+            index++;
+        }
+        in.close();
+        //-------------------------------insert_edge------------------------------//
+        for (int i = 1; i < (nodes.length - 1) / 2; i++) {
+            int leftChild = ((2 * i) + 1) % 16;
+            int rightChild = (2 * i) % 16;
+            if (i == 1) {
+                g.insertVertex(nodes[i]);
+            }
+            g.insertVertex(nodes[leftChild]);
+            g.insertVertex(nodes[rightChild]);
+            g.insertEdge(nodes[i], nodes[leftChild], nodes[i] + " (LeftChild)");
+            g.insertEdge(nodes[i], nodes[rightChild], nodes[i] + " (RightChild)");
+        }
+        //------------------------------------------------------------------------//
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         SmartGraphPanel<String, String> graphView = new SmartGraphPanel<>(g, strategy);
-        Scene scene = new Scene(graphView, 1024, 768);
+        Scene scene = new Scene(new SmartGraphDemoContainer(graphView), 1024, 768);
+
+        graphView.getStylableVertex(nodes[1]).setStyleClass("myVertex2");
 
         Stage stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("JavaFXGraph Visualization");
+        stage.setTitle("OPTIMAL BINARY SEARCH TREE");
         stage.setScene(scene);
         stage.show();
+
 
 //IMPORTANT - Called after scene is displayed so we can have width and height values
         graphView.init();
