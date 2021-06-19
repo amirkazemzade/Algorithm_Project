@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import model.Database;
 import model.Settings;
 
@@ -44,9 +41,13 @@ public class SettingsLayoutController implements Initializable {
     @FXML
     ToggleGroup tree_creation;
 
+    @FXML
+    TextField tree_size;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ram_usage.setItems(ramUsageItems);
+        tree_size.setDisable(create_one_tree.isSelected());
     }
 
     public int getRamUsage() {
@@ -69,12 +70,23 @@ public class SettingsLayoutController implements Initializable {
     }
 
     public boolean isByFirstLetter() {
+        tree_size.setDisable(!create_one_tree.isSelected());
         if (based_on_first_letter.isSelected()) {
             return true;
         } else if (create_one_tree.isSelected()) {
             return false;
         }
         return false;
+    }
+
+    public int getTreeSize() {
+        int size = -1;
+        if (create_one_tree.isSelected()) {
+            if (tree_size.getText().matches("\\d*")) {
+                size = Integer.parseInt(tree_size.getText());
+            }
+        }
+        return size;
     }
 
     public void onBackToMenuClicked(ActionEvent event) throws IOException {
@@ -85,7 +97,7 @@ public class SettingsLayoutController implements Initializable {
     }
 
     public void onSaveClicked(ActionEvent event) throws IOException {
-        Settings settings = new Settings(getRamUsage(), isByFirstLetter());
+        Settings settings = new Settings(getRamUsage(), isByFirstLetter(), getTreeSize());
         Database.writeSettings(settings);
         Main.settings = settings;
         onBackToMenuClicked(event);
@@ -98,8 +110,7 @@ public class SettingsLayoutController implements Initializable {
         }
         if (isByFirstLetter()) {
             Main.updateDatabaseByLetter();
-        }
-        else
+        } else
             Main.updateDatabase();
     }
 }

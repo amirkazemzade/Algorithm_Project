@@ -18,20 +18,20 @@ public class Database {
         if (!settingsFolder.exists()) settingsFolder.mkdir();
         BufferedWriter writer = new BufferedWriter(new FileWriter(settingsFile));
 
-        writer.write(settings.getRamUsage() + " " + settings.isByFirstLetter());
+        writer.write(settings.getRamUsage() + " " + settings.isByFirstLetter() + " " + settings.getTreeSize());
         writer.close();
     }
 
     // Reads setting from the setting file and returns an instance of read setting
     public static Settings readSetting() throws IOException {
         File settingsFile = new File("src\\settings\\settings.txt");
-        if (!settingsFile.exists()){
+        if (!settingsFile.exists()) {
             Settings settings = new Settings();
             writeSettings(settings);
             return settings;
         } else {
             Scanner in = new Scanner(new BufferedReader(new FileReader(settingsFile)));
-            return new Settings(in.nextInt(), in.nextBoolean());
+            return new Settings(in.nextInt(), in.nextBoolean(), in.nextInt());
         }
     }
 
@@ -67,8 +67,7 @@ public class Database {
         if (sortedDictionary.exists()) {
             words = readWordsByFirstLetter(sortedDictionary);
             System.out.println("has read sortedDictionary file!");
-        } else
-            if (dictionary.exists()) {
+        } else if (dictionary.exists()) {
             ArrayList<Word> unsortedWords = readWords(dictionary);
             unsortedWords.sort(new WordComparator());
             saveSortedArray(sortedDictionary, unsortedWords);
@@ -85,11 +84,28 @@ public class Database {
     private static ArrayList<Word> readWords(File file) throws FileNotFoundException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
         ArrayList<Word> words = new ArrayList<>();
-        while (in.hasNext()) {
-            String line = in.nextLine();
-            line = line.replace("\uFEFF", "");
-            String[] lineWord = line.split("\\s+");
-            words.add(new Word(lineWord[0].toLowerCase(), lineWord[1], Double.parseDouble(lineWord[2])));
+        int size = -1;
+        try {
+            Settings settings = readSetting();
+            size = settings.getTreeSize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (size == -1) {
+            while (in.hasNext()) {
+                String line = in.nextLine();
+                line = line.replace("\uFEFF", "");
+                String[] lineWord = line.split("\\s+");
+                words.add(new Word(lineWord[0].toLowerCase(), lineWord[1], Double.parseDouble(lineWord[2])));
+            }
+        } else {
+            while (in.hasNext() && size > 0) {
+                String line = in.nextLine();
+                line = line.replace("\uFEFF", "");
+                String[] lineWord = line.split("\\s+");
+                words.add(new Word(lineWord[0].toLowerCase(), lineWord[1], Double.parseDouble(lineWord[2])));
+                size--;
+            }
         }
         return words;
     }

@@ -17,6 +17,7 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuLayoutController {
@@ -45,7 +46,10 @@ public class MenuLayoutController {
 
         File data = new File("src\\data\\data0.txt");
 
-        String[] nodes = new String[16];
+//        String[] nodes = new String[16];
+
+        ArrayList<String> nodes = new ArrayList<>();
+        nodes.add(0, "");
 
         //-------------------------------insert_vertex----------------------------//
         Scanner in = new Scanner(data);
@@ -54,34 +58,35 @@ public class MenuLayoutController {
             String line = in.nextLine();
             String[] lineNode = line.split(" ");
 
-            nodes[index] = lineNode[1];
+            nodes.add(index, lineNode[1]);
             index++;
         }
         in.close();
         //-------------------------------insert_edge------------------------------//
-        for (int i = 1; i < (nodes.length - 1) / 2; i++) {
-            int leftChild = ((2 * i) + 1) % 16;
-            int rightChild = (2 * i) % 16;
+        for (int i = 1; i < (nodes.size() - 1) / 2; i++) {
+            int leftChild = (2 * i) % nodes.size();
+            int rightChild = ((2 * i) + 1) % nodes.size();
             if (i == 1) {
-                g.insertVertex(nodes[i]);
+                g.insertVertex(nodes.get(i));
             }
-            g.insertVertex(nodes[leftChild]);
-            g.insertVertex(nodes[rightChild]);
-            g.insertEdge(nodes[i], nodes[leftChild], nodes[i] + " (LeftChild)");
-            g.insertEdge(nodes[i], nodes[rightChild], nodes[i] + " (RightChild)");
+            g.insertVertex(nodes.get(leftChild));
+            g.insertVertex(nodes.get(rightChild));
+            g.insertEdge(nodes.get(i), nodes.get(leftChild), nodes.get(i) + " (LeftChild)");
+            g.insertEdge(nodes.get(i), nodes.get(rightChild), nodes.get(i) + " (RightChild)");
         }
         //------------------------------------------------------------------------//
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
         SmartGraphPanel<String, String> graphView = new SmartGraphPanel<>(g, strategy);
         Scene scene = new Scene(new SmartGraphDemoContainer(graphView), 1024, 768);
 
-        graphView.getStylableVertex(nodes[1]).setStyleClass("myVertex2");
+        graphView.getStylableVertex(nodes.get(1)).setStyleClass("myVertex2");
+
+        graphView.setAutomaticLayout(true);
 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("OPTIMAL BINARY SEARCH TREE");
         stage.setScene(scene);
         stage.show();
-
 
 //IMPORTANT - Called after scene is displayed so we can have width and height values
         graphView.init();
@@ -100,8 +105,12 @@ public class MenuLayoutController {
             settingsLayoutController.based_on_first_letter.setSelected(true);
         } else {
             settingsLayoutController.create_one_tree.setSelected(true);
+            if (Main.settings.getTreeSize() == -1) {
+                settingsLayoutController.tree_size.setText("size of all words");
+            } else {
+                settingsLayoutController.tree_size.setText(String.valueOf(Main.settings.getTreeSize()));
+            }
         }
-
     }
 
     @FXML

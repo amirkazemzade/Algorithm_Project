@@ -5,20 +5,31 @@ public class Settings {
 
     private int ramUsage;
     private boolean byFirstLetter;
+    private int treeSize;
 
     // ** Constructors **//
 
-    public Settings(int ramUsage, boolean byFirstLetter) {
+    public Settings(int ramUsage, boolean byFirstLetter, int treeSize) {
         this.ramUsage = ramUsage;
         this.byFirstLetter = byFirstLetter;
+        this.treeSize = treeSize;
     }
 
     public Settings() {
         ramUsage = 0;
         byFirstLetter = true;
+        treeSize = -1;
     }
 
     // ** Getters And Setters **//
+
+    public int getTreeSize() {
+        return treeSize;
+    }
+
+    public void setTreeSize(int treeSize) {
+        this.treeSize = treeSize;
+    }
 
     public int getRamUsage() {
         return ramUsage;
