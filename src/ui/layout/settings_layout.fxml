@@ -7,8 +7,10 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -17,7 +19,7 @@
         <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
         </padding>
-        <Button fx:id="back_to_menu" alignment="CENTER" mnemonicParsing="false" onAction="#onBackToMenuClicked" text="Back To Menu" style="-fx-background-color: skyblue">
+        <Button fx:id="back_to_menu" alignment="CENTER" mnemonicParsing="false" onAction="#onBackToMenuClicked" style="-fx-background-color: skyblue" text="Back To Menu">
             <HBox.margin>
                 <Insets />
             </HBox.margin>
@@ -25,13 +27,20 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Label alignment="CENTER" text="Settings" textAlignment="CENTER" textFill="#ea0b0b" HBox.hgrow="ALWAYS">
+        <Label alignment="CENTER" text="Settings" textAlignment="CENTER" textFill="#ffb900" HBox.hgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
             <HBox.margin>
                 <Insets left="30.0" />
             </HBox.margin>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.23076921701431274" />
+               </color>
+            </DropShadow>
+         </effect>
         </Label>
     </HBox>
     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -69,7 +78,7 @@
                 <ToggleGroup fx:id="tree_creation" />
             </toggleGroup>
         </RadioButton>
-      <TextField fx:id="tree_size" prefHeight="26.0" prefWidth="194.0" promptText="Enter Tree Size" >
+      <TextField fx:id="tree_size" prefHeight="26.0" prefWidth="194.0" promptText="Enter Tree Size">
          <VBox.margin>
             <Insets left="30.0" right="30.0" />
          </VBox.margin>
@@ -79,7 +88,7 @@
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </VBox.margin>
         </RadioButton>
-        <Button fx:id="update_database_button" layoutX="164.0" layoutY="174.0" mnemonicParsing="false" onAction="#onUpdateDatabaseClicked" text="Update Database" style="-fx-background-color: skyblue">
+        <Button fx:id="update_database_button" layoutX="164.0" layoutY="174.0" mnemonicParsing="false" onAction="#onUpdateDatabaseClicked" style="-fx-background-color: skyblue" text="Save and Update Database">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
@@ -87,7 +96,7 @@
                 <Insets bottom="10.0" />
             </VBox.margin>
         </Button>
-        <Button fx:id="save_button" mnemonicParsing="false" onAction="#onSaveClicked" text="Save" style="-fx-background-color: skyblue">
+        <Button fx:id="save_button" mnemonicParsing="false" onAction="#onSaveClicked" style="-fx-background-color: skyblue" text="Save">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
