@@ -12,8 +12,8 @@
    </padding>
    <Label text="Enter your text:" />
    <TextArea fx:id="inputText" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-   <Button fx:id="translateButton" mnemonicParsing="false" text="Translate" />
+   <Button fx:id="translateButton" mnemonicParsing="false" text="Translate" style="-fx-background-color: skyblue"/>
    <TextArea fx:id="outputText" editable="false" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-   <Button fx:id="treeMode" mnemonicParsing="false" text="Normal Tree" />
-   <Button fx:id="updateDatabaseButton" mnemonicParsing="false" text="Update Database" />
+   <Button fx:id="treeMode" mnemonicParsing="false" text="Normal Tree" style="-fx-background-color: skyblue"/>
+   <Button fx:id="updateDatabaseButton" mnemonicParsing="false" text="Update Database" style="-fx-background-color: skyblue"/>
 </VBox>
