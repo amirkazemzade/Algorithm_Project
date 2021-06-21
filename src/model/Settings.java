@@ -18,7 +18,7 @@ public class Settings {
     public Settings() {
         ramUsage = 0;
         byFirstLetter = true;
-        treeSize = -1;
+        treeSize = 500;
     }
 
     // ** Getters And Setters **//
