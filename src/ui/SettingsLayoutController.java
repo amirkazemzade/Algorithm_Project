@@ -47,7 +47,7 @@ public class SettingsLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ram_usage.setItems(ramUsageItems);
-        tree_size.setDisable(create_one_tree.isSelected());
+        tree_size.setDisable(Main.settings.isByFirstLetter());
     }
 
     public int getRamUsage() {
@@ -104,6 +104,7 @@ public class SettingsLayoutController implements Initializable {
     }
 
     public void onUpdateDatabaseClicked(ActionEvent event) throws IOException {
+        onSaveClicked(event);
         if (Main.isUpdating) {
             System.out.println("Database is updating!");
             return;
