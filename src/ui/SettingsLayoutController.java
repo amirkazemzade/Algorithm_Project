@@ -24,8 +24,6 @@ public class SettingsLayoutController implements Initializable {
 
     ObservableList<String> ramUsageItems = FXCollections.observableArrayList("low", "medium", "high", "very high");
 
-    int initTreeSize;
-
     @FXML
     Button back_to_menu;
 
@@ -57,14 +55,14 @@ public class SettingsLayoutController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ram_usage.setItems(ramUsageItems);
         tree_size.setDisable(Main.settings.isByFirstLetter());
-        initTreeSize = Main.settings.getTreeSize();
+        tree_size.setText(String.valueOf(Main.settings.getTreeSize()));
         box.setBackground(
                 new Background(
                         new BackgroundFill(
                                 new LinearGradient(
-                                        0, 0, 200, 200 ,  false,
+                                        0, 0, 200, 200, false,
                                         CycleMethod.REFLECT,
-                                        new Stop(0,  Color.web("#8E54E9")),
+                                        new Stop(0, Color.web("#8E54E9")),
                                         new Stop(1, Color.web("#4776E6"))
                                 ),
                                 CornerRadii.EMPTY,
@@ -105,9 +103,11 @@ public class SettingsLayoutController implements Initializable {
 
     public int getTreeSize() {
         int size = -1;
-        if (create_one_tree.isSelected()) {
-            if (tree_size.getText().matches("\\d*")) {
+        if (tree_size.getText().matches("\\d*")) {
+            if (create_one_tree.isSelected()) {
                 size = Integer.parseInt(tree_size.getText());
+            } else {
+                size = Main.settings.getTreeSize();
             }
         }
         return size;
@@ -121,11 +121,12 @@ public class SettingsLayoutController implements Initializable {
     }
 
     public void onSaveClicked(ActionEvent event) throws IOException {
-        if (initTreeSize != Main.settings.getTreeSize()) {
+        if (Main.settings.getTreeSize() != getTreeSize() && !isByFirstLetter()) {
             onUpdateDatabaseClicked(event);
         } else {
             save();
         }
+        onBackToMenuClicked(event);
     }
 
     public void onUpdateDatabaseClicked(ActionEvent event) throws IOException {
