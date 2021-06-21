@@ -6,9 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.*;
 import model.Database;
 import model.Settings;
 
@@ -44,10 +48,27 @@ public class SettingsLayoutController implements Initializable {
     @FXML
     TextField tree_size;
 
+    @FXML
+    VBox box;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ram_usage.setItems(ramUsageItems);
         tree_size.setDisable(Main.settings.isByFirstLetter());
+        box.setBackground(
+                new Background(
+                        new BackgroundFill(
+                                new LinearGradient(
+                                        0, 0, 200, 200 ,  false,
+                                        CycleMethod.REFLECT,
+                                        new Stop(0,  Color.web("#8E54E9")),
+                                        new Stop(1, Color.web("#4776E6"))
+                                ),
+                                CornerRadii.EMPTY,
+                                Insets.EMPTY
+                        )
+                )
+        );
     }
 
     public int getRamUsage() {

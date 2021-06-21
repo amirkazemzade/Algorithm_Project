@@ -8,19 +8,31 @@ import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
 import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class MenuLayoutController {
+public class MenuLayoutController implements Initializable {
     @FXML
     private Button enter_text_button;
 
@@ -29,6 +41,28 @@ public class MenuLayoutController {
 
     @FXML
     private Button exit_button;
+
+    @FXML
+    private VBox box;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        box.setBackground(
+                new Background(
+                        new BackgroundFill(
+                                new LinearGradient(
+                                        0, 0, 200, 200 ,  false,
+                                        CycleMethod.REFLECT,
+                                        new Stop(0,  Color.web("#4776E6")),
+                                        new Stop(1, Color.web("#8E54E9"))
+                                ),
+                                CornerRadii.EMPTY,
+                                Insets.EMPTY
+                        )
+                )
+        );
+    }
+
 
     @FXML
     public void onEnterTextClicked() throws IOException {
