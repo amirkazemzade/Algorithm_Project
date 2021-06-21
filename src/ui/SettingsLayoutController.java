@@ -24,6 +24,8 @@ public class SettingsLayoutController implements Initializable {
 
     ObservableList<String> ramUsageItems = FXCollections.observableArrayList("low", "medium", "high", "very high");
 
+    int initTreeSize;
+
     @FXML
     Button back_to_menu;
 
@@ -55,6 +57,7 @@ public class SettingsLayoutController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ram_usage.setItems(ramUsageItems);
         tree_size.setDisable(Main.settings.isByFirstLetter());
+        initTreeSize = Main.settings.getTreeSize();
         box.setBackground(
                 new Background(
                         new BackgroundFill(
@@ -118,14 +121,15 @@ public class SettingsLayoutController implements Initializable {
     }
 
     public void onSaveClicked(ActionEvent event) throws IOException {
-        Settings settings = new Settings(getRamUsage(), isByFirstLetter(), getTreeSize());
-        Database.writeSettings(settings);
-        Main.settings = settings;
-        onBackToMenuClicked(event);
+        if (initTreeSize != Main.settings.getTreeSize()) {
+            onUpdateDatabaseClicked(event);
+        } else {
+            save();
+        }
     }
 
     public void onUpdateDatabaseClicked(ActionEvent event) throws IOException {
-        onSaveClicked(event);
+        save();
         if (Main.isUpdating) {
             System.out.println("Database is updating!");
             return;
@@ -134,5 +138,11 @@ public class SettingsLayoutController implements Initializable {
             Main.updateDatabaseByLetter();
         } else
             Main.updateDatabase();
+    }
+
+    private void save() throws IOException {
+        Settings settings = new Settings(getRamUsage(), isByFirstLetter(), getTreeSize());
+        Database.writeSettings(settings);
+        Main.settings = settings;
     }
 }
